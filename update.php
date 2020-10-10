@@ -29,27 +29,32 @@ if(isset($_POST['submit'])) {
     $email = "";
     $password = '';
 
-   // Validation
+   /// Validation
     //First Name
+    try{
     if(isFirstNameValid($_POST['firstName']) == 1) {
         $firstName = formValidate($_POST['firstName']);
     } else {
-        die("Error: Invalid First Name!");
+        echo "Error: Invalid First Name!";
+        throw new customException("First Name Input Validation Error",1);
     }
 
      //Last Name
     if(isLastNameValid($_POST['lastName']) == 1) {
         $lastName = formValidate($_POST['lastName']);
     } else {
-        die("Error: Invalid Last Name!");
+        echo "Error: Invalid Last Name!";
+        throw new customException("Last Name Input Validation Error",1);
     }
 
     // Email
     if(isEmailValid($_POST['email']) == 1) {
         $email = formValidate($_POST['email']);
     } else {
-        die("Error: Invalid Email!");
+        echo "Error: Invalid Email!";
+        throw new customException("Email Input Validation Error",1);
     }
+
 
       // Changing password
       $oldPassword = $_POST['old-pass'];
@@ -63,11 +68,16 @@ if(isset($_POST['submit'])) {
               $password = $_POST['new-pass'];
               $password = password_hash($password, PASSWORD_BCRYPT);
           } else {
-              die("Error: Invalid Password!");
+              echo "Error: Invalid Password!";
+              throw new customException("Invalid Pasword",1);
           }
       } else {
-          die("Error: Wrong Old Password or New Password doesn't match to the Confirm Password!");
-      }
+          echo "Error: Wrong Old Password or New Password doesn't match to the Confirm Password!"; 
+           throw new customException("Change Password Validation Error",1);
+        }
+    }catch(customException $e){
+        insertLog("ERROR",$e->errorCode(),$e->errorMessage());
+    }
 
 
     if($_POST['access'] == "") {
@@ -79,6 +89,9 @@ if(isset($_POST['submit'])) {
     $sql = "UPDATE `users` SET `firstName` = '$firstName', `lastName` = '$lastName', `email` = '$email', `password` = '$password', `access` = '$access' WHERE `userID` = $id";
 
     $con->query($sql) or die($con->error);
+
+    $last_id = $con->insert_id;	
+    insertLog("INFO", 1, " User ID ".$_SESSION['ID']." edit an account with an ID of ".$last_id);
 
     //logout if the info was change on the own account.
     if($_SESSION['ID'] == $id) {

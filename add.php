@@ -15,42 +15,49 @@ if(isset($_SESSION['Access']) && $_SESSION['Access'] == "admin") {
 }
 
 if(isset($_POST['submit'])) {
-   // Validation
+   /// Validation
     //First Name
+    try{
     if(isFirstNameValid($_POST['firstName']) == 1) {
         $firstName = formValidate($_POST['firstName']);
     } else {
-        die("Error: Invalid First Name!");
+        throw new customException("First Name Input Validation Error",1);
     }
 
      //Last Name
     if(isLastNameValid($_POST['lastName']) == 1) {
         $lastName = formValidate($_POST['lastName']);
     } else {
-        die("Error: Invalid Last Name!");
+        throw new customException("Last Name Input Validation Error",1);
     }
 
     // Email
     if(isEmailValid($_POST['email']) == 1) {
         $email = formValidate($_POST['email']);
     } else {
-        die("Error: Invalid Email!");
+        throw new customException("Email Input Validation Error",1);
     }
 
     // Password
     if(isPasswordValid($_POST['password']) == 1) {
         $password = $_POST['password'];
     } else {
-        die("Error: Invalid Password!");
+        throw new customException("Password Input Validation Error",1);
+        
     }
-
+}catch(customException $e){
+    insertLog("ERROR",$e->errorCode(),$e->errorMessage());
+}
     
     $hash = password_hash($password, PASSWORD_BCRYPT);
     session_regenerate_id(true);// 02/10/2020
     $access = $_POST['access'];
     $sql = "INSERT INTO `users` (`firstName`,`lastName`,`email`,`password`,`access`) VALUES ('$firstName','$lastName','$email','$hash', '$access')";
-
+    
     $con->query($sql) or die($con->error);
+
+    $last_id = $con->insert_id;	
+    insertLog("INFO", 1, " User ID ".$_SESSION['ID']." add a new user with an ID of ".$last_id);
 
    echo header("Location: accounts.php");
 }

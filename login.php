@@ -21,7 +21,8 @@ if(isset($_POST['login'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
     if(empty($email)||empty($password)){
-        throw new customException("Fill all the fields");
+        $loginErrorMsg="Fill all the Fields";
+        throw new customException("EmptyField",1);
           }
     $sql = "SELECT * FROM users WHERE email = '$email'";
 
@@ -34,29 +35,29 @@ if(isset($_POST['login'])) {
         $db_password = $row['password'];
 
         if(password_verify($password, $db_password)) {
-        session_destroy();//destroy first 02/10/2020
-        session_start();//start again 02/10/2020
-        session_regenerate_id(true); // regenerate a new identifier 02/10/2020
+            session_destroy();//destroy first 02/10/2020
+            session_start();//start again 02/10/2020
+            session_regenerate_id(true); // regenerate a new identifier 02/10/2020
             $_SESSION['UserLogin'] = $row['email'];
             $_SESSION['Access'] = $row['access'];
             $_SESSION['ID'] = $row['userID'];
             echo header("Location: home.php");    
+        
             // Insert A Log for A Login Success
          insertLog("Success", 0, "Successful login");
         } else{
-            throw new customException("Invalid username and/or password! Please try again!");
+            $loginErrorMsg="Invalid username and/or password! Please try again!";
+            throw new customException("Invalid Input Credentials During Login",1); 
         }
     } else {
-        throw new customException("Invalid username and/or password! Please try again!");
+        $loginErrorMsg="Invalid username and/or password! Please try again!";
+        throw new customException("Invalid Input Credentials During Login",1); 
     }
     $con->close();
 }
 }catch(customException $e){
-    
-    $loginErrorMsg=$e->errorMessage();
-
-    // Insert A Log for A Login Error
-    insertLog("ERROR", 1, "Invalid Input Credentials During Login");
+    // Login Failure Error
+    insertLog("ERROR", $e->errorCode(), $e->errorMessage());
 }
 
 
@@ -75,28 +76,31 @@ if(isset($_POST['register'])) {
     if(isFirstNameValid($_POST['firstName']) == 1) {
         $firstName = formValidate($_POST['firstName']);
     } else {
-        throw new customException("Error: Invalid First Name!");
+        echo "Error: Invalid First Name!";
+        throw new customException("First Name Input Validation Error",1);
     }
 
      //Last Name
     if(isLastNameValid($_POST['lastName']) == 1) {
         $lastName = formValidate($_POST['lastName']);
     } else {
-        throw new customException("Error: Invalid Last Name!");
+        echo "Error: Invalid Last Name!";
+        throw new customException("Last Name Input Validation Error",1);
     }
 
     // Email
     if(isEmailValid($_POST['email']) == 1) {
         $email = formValidate($_POST['email']);
     } else {
-        throw new customException("Error: Invalid Email!");
+        echo "Error: Invalid Email!";
+        throw new customException("Email Input Validation Error",1);
     }
 
     // Password
     if(isPasswordValid($_POST['password']) == 1) {
         $password = $_POST['password'];
     } else {
-        throw new customException("Error: Invalid Password!");
+        throw new customException("Password Input Validation Error",1);
     }
 
     
@@ -111,19 +115,18 @@ if(isset($_POST['register'])) {
     $total = $user->num_rows;
 
     if($total > 0) {
-        throw new customException("Duplicate Email! Try Again");
+        throw new customException("Duplicate Email");
     } else {
         $insertSql = "INSERT INTO `users` (`firstName`,`lastName`, `email`,`password`,`access`) VALUES ('$firstName', '$lastName', '$email','$hash','user')";
    
-
         // Rejection if it is empty	       
         if($firstName == "" || $lastName == "" || $email == "" || $password = "") {	
             throw new customException("Error: Invalid Input!");	
-            
         } else {	
             $con->query($insertSql) or die($con->error);	
             $last_id = $con->insert_id;	
         }
+
         session_destroy();//destroy first 02/10/2020
         session_start();//start again 02/10/2020
         session_regenerate_id(true); // regenerate a new identifier 02/10/2020
@@ -131,12 +134,17 @@ if(isset($_POST['register'])) {
         $_SESSION['Access'] = "user";
         $_SESSION['ID'] = $last_id;
         echo header("Location: home.php");  
+
+        // Register success log       
+        insertLog("INFO", 1, " User ID ".$last_id." Register Successful");
+        insertLog("INFO", 1, " User ID ".$_SESSION['ID']." successfully login to the system");
     }
 
     $con->close();
 }
 }catch(customException $e){
-    echo $e->errorMessage();
+ 
+    insertLog("ERROR",$e->errorCode(), $e->errorMessage());
 }
 
 ?>
@@ -194,9 +202,11 @@ if(isset($_POST['register'])) {
                                     </div>
                                     <div class="form-group">
                                         <label for="password">Password</label>
-                                        <input id="pass" type="password" autocomplete="off" class="form-control" name="password"> <input type="checkbox" onclick="unhidePassword()" > Show Password </input>
+                                        <input id="pass" type="password" autocomplete="off" class="form-control"
+                                            name="password"> <input type="checkbox" onclick="unhidePassword()"> Show
+                                        Password </input>
                                     </div>
-                                    
+
                                     <input type="submit" name="login" class="btn btn-primary float-right"
                                         value="Sign In"></input>
                                 </form>
@@ -229,10 +239,14 @@ if(isset($_POST['register'])) {
                                     </div>
                                     <div class="form-group">
                                         <label for="password">Password</label>
-                                        <input id="pass2" type="password" autocomplete="off" class="form-control" name="password"> <input type="checkbox" onclick="unhidePassword()" > Show Password </input>
+                                        <input id="pass2" type="password" autocomplete="off" class="form-control"
+                                            name="password"> <input type="checkbox" onclick="unhidePassword()"> Show
+                                        Password </input>
                                         <small id="passwordHelpBlock" class="form-text text-muted">
-                                    At least 8 characters long, <br> contains at least 1 uppercase, 1 lowercase, 1 number, <br> 1 special character and SHOULD NOT start with a special character
-                                    </small>
+                                            At least 8 characters long, <br> contains at least 1 uppercase, 1 lowercase,
+                                            1 number, <br> 1 special character and SHOULD NOT start with a special
+                                            character
+                                        </small>
                                     </div>
                                     <input type="submit" name="register" class="btn btn-primary float-right"
                                         value="Sign Up"></input>

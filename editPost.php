@@ -30,6 +30,9 @@ if(isset($_POST['submit'])) {
     $sql = "UPDATE `posts` SET `subject` = '$subject', `body` = '$body' WHERE `userID` = $userID AND `postID` = $id";
     $con->query($sql) or die($con->error);
 
+    $last_id = $con->insert_id;	
+    insertLog("INFO", 1, " User ID ".$_SESSION['ID']." edited a post with an ID of ".$last_id);
+
     echo header("Location: myPosts.php");
 }
 ?>
