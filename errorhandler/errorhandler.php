@@ -22,11 +22,12 @@ class customException extends Exception {
       $errorMsg = $this->getMessage();
       return $errorMsg;
     }
+    public function errorCode() {
+      //error code
+      $errorCode = $this->getCode();
+      return $errorCode;
+    }
   }
-  public function errorCode() {
-    //error code
-    $errorCode = $this->getCode();
-    return $errorCode;
-  }
+ 
 
 ?>
