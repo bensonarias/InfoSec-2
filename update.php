@@ -6,6 +6,9 @@ if(!isset($_SESSION)) {
 
 include_once "connections/connection.php";
 include "validation/validation.php";
+include "errorhandler/errorhandler.php";
+include "errorhandler/sql_logging.php";
+
 $con = connection();
 
 $id = $_GET['ID'];

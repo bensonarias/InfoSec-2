@@ -5,6 +5,9 @@ if(!isset($_SESSION)) {
 }
 
 include_once "connections/connection.php";
+include "validation/validation.php";
+include "errorhandler/errorhandler.php";
+include "errorhandler/sql_logging.php";
 
 $con = connection();
 
@@ -27,16 +30,16 @@ if(isset($_POST['addPost'])) {
         $firstName = formValidate($_POST['postSubject']);
     } else {
         echo "Error: Invalid Subject Name!";
-        throw new customException("User ID: ".$_SESSION['ID']." Post Subject Input Validation Error",1);
+        insertLog("User ID: ".$_SESSION['ID']." Post Subject Input Validation Error",1);
     }
 
 
-    
-    if(isBodytValid($_POST['postBody']) == 1) {
+    // Body
+    if(isBodyValid($_POST['postBody']) == 1) {
         $firstName = formValidate($_POST['postBody']);
     } else {
         echo "Error: Invalid Body Content!";
-        throw new customException("User ID: ".$_SESSION['ID']." Post Body Input Validation Error",1);
+        insertLog("User ID: ".$_SESSION['ID']." Post Body Input Validation Error",1);
         
     }
     }catch(customException $e){
@@ -66,17 +69,18 @@ if(isset($_POST['myPost'])) {
         $firstName = formValidate($_POST['postSubject']);
     } else {
         echo "Error: Invalid Subject Name!";
-        throw new customException("User ID: ".$_SESSION['ID']." Post Subject Input Validation Error",1);
+        insertLog("ERROR", "User ID: ".$_SESSION['ID']." Post Subject Input Validation Error",1);
     }
 
 
-    
-    if(isBodytValid($_POST['postBody']) == 1) {
+    if(isBodyValid($_POST['postBody']) == 1) {
         $firstName = formValidate($_POST['postBody']);
     } else {
         echo "Error: Invalid Body Content!";
-        insertLog("User ID: ".$_SESSION['ID']." Post Body Input Validation Error",1);
+        insertLog("ERROR", "User ID: ".$_SESSION['ID']." Post Body Input Validation Error",1);
     }
+
+
     }catch(customException $e){
         insertLog("ERROR", $e->errorCode(),$e->errorMessage());
     }
