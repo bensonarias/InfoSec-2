@@ -34,13 +34,8 @@ if(isset($_POST['addPost'])) {
     }
 
 
-<<<<<<< HEAD
-    
-    if(isBodytValid($_POST['postBody']) == 1) {
-=======
     // Body
     if(isBodyValid($_POST['postBody']) == 1) {
->>>>>>> f4269ff8a9c04b925d100c6a135be3fb87bebfe2
         $firstName = formValidate($_POST['postBody']);
     } else {
         echo "Error: Invalid Body Content!";
@@ -78,13 +73,7 @@ if(isset($_POST['myPost'])) {
     }
 
 
-<<<<<<< HEAD
-    
-    if(isBodytValid($_POST['postBody']) == 1) {
-=======
-    // Body
     if(isBodyValid($_POST['postBody']) == 1) {
->>>>>>> f4269ff8a9c04b925d100c6a135be3fb87bebfe2
         $firstName = formValidate($_POST['postBody']);
     } else {
         echo "Error: Invalid Body Content!";
