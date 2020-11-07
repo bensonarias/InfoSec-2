@@ -28,7 +28,6 @@ if(isset($_SESSION['UserLogin'])) {
 
 ?>
 
-<!-- HTML CODES -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -46,7 +45,7 @@ if(isset($_SESSION['UserLogin'])) {
             <h1 class="text-center"> The CCIT Wall </h1>
             <h3 class="text-center"> Homepage </h3>
 
-            <!-- Button Group User -->
+            
             <h1> &nbsp;&nbsp;My Posts </h1>	
             <small> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;View your posts.</small>
             <div class="btn-group float-right" role="group" aria-label="Basic example">
@@ -59,7 +58,7 @@ if(isset($_SESSION['UserLogin'])) {
             <br>
             <hr>
 
-            <!-- Compose Post Section -->
+            
             <h3>&nbsp;&nbsp; Compose Post </h3>
             <div class="card">
                 <div class="card-body">
@@ -80,7 +79,7 @@ if(isset($_SESSION['UserLogin'])) {
 
             <br>
 
-            <!-- My Posts -->
+            
 
             <h3> &nbsp;&nbsp;My Posts </h3>
             <?php if($userPosts->num_rows > 0) { ?>
@@ -89,7 +88,7 @@ if(isset($_SESSION['UserLogin'])) {
                 <div class="card-header">
                     <h4 class="card-title text-primary"> <?php echo $userPostRow['subject'] ?></h4>
 
-                    <!-- In Progress -->
+                    
                     <form action="delete.php" onSubmit="return confirm('Do you really want to delete this post?')" method="post" accept-charset="utf-8">
                                 <button type="submit" class="view btn btn-danger btn-sm float-right" name="deletePost"><b>Delete Post</b></button>
                                 <input type="hidden" class="<style>" name="ID" value="<?php echo $userPostRow['postID']?>">

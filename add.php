@@ -15,8 +15,7 @@ if(isset($_SESSION['Access']) && $_SESSION['Access'] == "admin") {
 }
 
 if(isset($_POST['submit'])) {
-   /// Validation
-    //First Name
+   
     try{
     if(isFirstNameValid($_POST['firstName']) == 1) {
         $firstName = formValidate($_POST['firstName']);
@@ -24,21 +23,21 @@ if(isset($_POST['submit'])) {
         throw new customException("First Name Input Validation Error",1);
     }
 
-     //Last Name
+    
     if(isLastNameValid($_POST['lastName']) == 1) {
         $lastName = formValidate($_POST['lastName']);
     } else {
         throw new customException("Last Name Input Validation Error",1);
     }
 
-    // Email
+    
     if(isEmailValid($_POST['email']) == 1) {
         $email = formValidate($_POST['email']);
     } else {
         throw new customException("Email Input Validation Error",1);
     }
 
-    // Password
+    
     if(isPasswordValid($_POST['password']) == 1) {
         $password = $_POST['password'];
     } else {
@@ -50,7 +49,7 @@ if(isset($_POST['submit'])) {
 }
     
     $hash = password_hash($password, PASSWORD_BCRYPT);
-    session_regenerate_id(true);// 02/10/2020
+    session_regenerate_id(true);
     $access = $_POST['access'];
     $sql = "INSERT INTO `users` (`firstName`,`lastName`,`email`,`password`,`access`) VALUES ('$firstName','$lastName','$email','$hash', '$access')";
     
@@ -117,10 +116,10 @@ if(isset($_POST['submit'])) {
 
     </div>
 
-    <!-- JQuery library -->
+
     <script src="js/jquery/jquery.min.js"></script>
 
-    <!-- JQuery Script -->
+    
     <script>
         function unhidePassword() {
             var x = document.getElementById("pass");

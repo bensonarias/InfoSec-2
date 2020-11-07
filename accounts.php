@@ -41,7 +41,7 @@ if (isset($_SESSION['UserLogin'])) {
         <h1 class="text-center"> The CCIT Wall </h1>
         <h3 class="text-center"> Homepage </h3>
 
-        <!-- Button Group -->
+        
         <h1> Accounts </h1>
         <small> View All Users.</small>
         <div class="btn-group float-right" role="group" aria-label="">
@@ -53,16 +53,16 @@ if (isset($_SESSION['UserLogin'])) {
         <hr>
 
         <div class="btn-group float-right" role="group" arial-label="">
-            <!-- ADMIN Add Account Button -->
+   
             <?php if ($_SESSION['Access'] == "admin") { ?>
                 <a class="btn btn-link float-right font-weight-bold" href="/ccitforum/add.php"> Add New Account </a> <br> <br>
             <?php } ?>
 
-            <!-- USER Edit Account Link -->
+            
             <a id="loginBtn" class="btn btn-link float-right font-weight-bold" href="/ccitforum/update.php?ID=<?php echo $id ?>"> Edit my Account </a>
 
         </div>
-        <!-- Search Bar -->
+
         <form action="result.php" method="get">
             <div class="input-group mb-3">
                 <input type="text" name="search" id="search" class="form-control" placeholder="Search for user's name or email" autocomplete="off">
@@ -72,7 +72,7 @@ if (isset($_SESSION['UserLogin'])) {
             </div>
         </form>
 
-        <!-- Users Table -->
+
         <table class="table table-striped">
 
             <thead class="bg-primary" style="color:white;">
@@ -83,7 +83,7 @@ if (isset($_SESSION['UserLogin'])) {
                     <th scope="col">Last Name</th>
                     <th scope="col">Email</th>
 
-                    <!-- ADMIN COLUMNS FIELDS -->
+                    
                     <?php if ($_SESSION['Access'] == "admin") { ?>
                         <th scope="col">Password</th>
                         <th scope="col">Access</th>
@@ -105,7 +105,7 @@ if (isset($_SESSION['UserLogin'])) {
                             <td> <?php echo $row['lastName']; ?> </td>
                             <td> <?php echo $row['email']; ?> </td>
 
-                            <!-- ADMIN Rows -->
+                            
                             <?php if ($_SESSION['Access'] == "admin") { ?>
                                 <td> <?php echo $row['password']; ?> </td>
                                 <td> <?php echo $row['access']; ?> </td>

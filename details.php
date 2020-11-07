@@ -13,12 +13,12 @@ $con = connection();
 
 $id = $_GET['ID'];
 
-// Get user
+
 $sql = "SELECT * FROM users WHERE userID = '$id'";
 $users = $con->query($sql) or die($con->error);
 $row = $users->fetch_assoc();
 
-// Get user's post
+
 $userPostSQL = "SELECT users.userID, users.firstName, users.lastName, users.email, posts.postID, posts.subject, posts.body, posts.dateAdded ".
             "FROM users JOIN posts ".
             "ON users.userID = posts.userID ".
@@ -54,7 +54,7 @@ if(isset($_SESSION['UserLogin'])) {
         <h1 class="text-center"> CCIT Forum Admin </h1>
         <h3 class="text-center"> View Details </h3>
         <br> <br>
-        <!-- <a class="btn btn-dark" href="/ccitforum/index.php"> Back to List </a> <br> -->
+      
 
         <a id="loginBtn" class="btn btn-dark float-right" href="/ccitforum/accounts.php"> Back to User's List. </a>	
         <br><br>
@@ -70,7 +70,7 @@ if(isset($_SESSION['UserLogin'])) {
 
         <br>
 
-        <!-- User's Posts -->
+       
 
         <?php if ($userPosts->num_rows > 0) { ?>	        
             <br>

@@ -21,7 +21,7 @@ if(isset($_POST['addPost'])) {
     $last_id = $con->insert_id;	
     insertLog("INFO", 1, " User ID ".$_SESSION['ID']." add a new post with an ID of ".$last_id);
 
-    //Subject
+    
     try{
     if(isSubjectValid($_POST['postSubject']) == 1) {
         $firstName = formValidate($_POST['postSubject']);
@@ -31,7 +31,7 @@ if(isset($_POST['addPost'])) {
     }
 
 
-    // Body
+    
     if(isBodytValid($_POST['postBody']) == 1) {
         $firstName = formValidate($_POST['postBody']);
     } else {
@@ -60,7 +60,7 @@ if(isset($_POST['myPost'])) {
     insertLog("INFO", 1, " User ID ".$_SESSION['ID']." add a new user with an ID of ".$last_id);
     
     
-    //Subject
+    
     try{
     if(isSubjectValid($_POST['postSubject']) == 1) {
         $firstName = formValidate($_POST['postSubject']);
@@ -70,7 +70,7 @@ if(isset($_POST['myPost'])) {
     }
 
 
-    // Body
+    
     if(isBodytValid($_POST['postBody']) == 1) {
         $firstName = formValidate($_POST['postBody']);
     } else {

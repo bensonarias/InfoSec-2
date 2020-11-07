@@ -28,8 +28,6 @@ if(isset($_SESSION['UserLogin'])) {
 ?>
 
 
-<!-- HTML CODES -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -46,7 +44,7 @@ if(isset($_SESSION['UserLogin'])) {
             <h1 class="text-center"> The CCIT Wall </h1>
             <h3 class="text-center"> Homepage </h3>
 
-            <!-- Button Group User -->
+           
             <h1>&nbsp; News Feed </h1>
             <small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  View the latest post.</small>
             <div class="btn-group float-right font-weight-bold" role="group" aria-label="Basic example">
@@ -59,7 +57,7 @@ if(isset($_SESSION['UserLogin'])) {
             <br>
             <hr>
 
-            <!-- Compose Post Section -->
+            
             <h3>&nbsp;&nbsp; Compose Post </h3>
             <div class="card">
                 <div class="card-body">
@@ -80,7 +78,6 @@ if(isset($_SESSION['UserLogin'])) {
 
             <br>
 
-            <!-- Recent Posts -->
 
             
             <h3> &nbsp;&nbsp;News Feed </h3>

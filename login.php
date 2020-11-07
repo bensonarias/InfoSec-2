@@ -1,6 +1,5 @@
 <?php
     
-//for error messages
  $loginErrorMsg = "";
 
 if(!isset($_SESSION)) {
@@ -14,7 +13,7 @@ include "errorhandler/sql_logging.php";
 $con = connection();
 
 
-// Login POST Action
+
 try{
 if(isset($_POST['login'])) {
    
@@ -35,15 +34,15 @@ if(isset($_POST['login'])) {
         $db_password = $row['password'];
 
         if(password_verify($password, $db_password)) {
-            session_destroy();//destroy first 02/10/2020
-            session_start();//start again 02/10/2020
-            session_regenerate_id(true); // regenerate a new identifier 02/10/2020
+            session_destroy();
+            session_start();
+            session_regenerate_id(true); 
             $_SESSION['UserLogin'] = $row['email'];
             $_SESSION['Access'] = $row['access'];
             $_SESSION['ID'] = $row['userID'];
             echo header("Location: home.php");    
         
-            // Insert A Log for A Login Success
+            
          insertLog("Success", 0, "Successful login");
         } else{
             $loginErrorMsg="Invalid username and/or password! Please try again!";
@@ -56,23 +55,22 @@ if(isset($_POST['login'])) {
     $con->close();
 }
 }catch(customException $e){
-    // Login Failure Error
+    
     insertLog("ERROR", $e->errorCode(), $e->errorMessage());
 }
 
 
 
-// Register POST Action
+
 try{
 if(isset($_POST['register'])) {
-    // Empty by default
+    
     $firstName = "";
     $lastName = "";
     $email = "";
     $password = '';
 
-    // Validation
-    //First Name
+    
     if(isFirstNameValid($_POST['firstName']) == 1) {
         $firstName = formValidate($_POST['firstName']);
     } else {
@@ -80,7 +78,7 @@ if(isset($_POST['register'])) {
         throw new customException("First Name Input Validation Error",1);
     }
 
-     //Last Name
+     
     if(isLastNameValid($_POST['lastName']) == 1) {
         $lastName = formValidate($_POST['lastName']);
     } else {
@@ -88,7 +86,7 @@ if(isset($_POST['register'])) {
         throw new customException("Last Name Input Validation Error",1);
     }
 
-    // Email
+    
     if(isEmailValid($_POST['email']) == 1) {
         $email = formValidate($_POST['email']);
     } else {
@@ -96,7 +94,7 @@ if(isset($_POST['register'])) {
         throw new customException("Email Input Validation Error",1);
     }
 
-    // Password
+    
     if(isPasswordValid($_POST['password']) == 1) {
         $password = $_POST['password'];
     } else {
@@ -108,7 +106,7 @@ if(isset($_POST['register'])) {
         $hash = password_hash($password, PASSWORD_BCRYPT);
     }
     
-    // For duplicate email checking
+    
     $sql = "SELECT * FROM users WHERE email = '$email'";
     $user = $con->query($sql) or die ($con->error);
     $row = $user -> fetch_assoc();
@@ -119,7 +117,7 @@ if(isset($_POST['register'])) {
     } else {
         $insertSql = "INSERT INTO `users` (`firstName`,`lastName`, `email`,`password`,`access`) VALUES ('$firstName', '$lastName', '$email','$hash','user')";
    
-        // Rejection if it is empty	       
+              
         if($firstName == "" || $lastName == "" || $email == "" || $password = "") {	
             throw new customException("Error: Invalid Input!");	
         } else {	
@@ -127,15 +125,15 @@ if(isset($_POST['register'])) {
             $last_id = $con->insert_id;	
         }
 
-        session_destroy();//destroy first 02/10/2020
-        session_start();//start again 02/10/2020
-        session_regenerate_id(true); // regenerate a new identifier 02/10/2020
+        session_destroy();
+        session_start();
+        session_regenerate_id(true); 
         $_SESSION['UserLogin'] = $email;
         $_SESSION['Access'] = "user";
         $_SESSION['ID'] = $last_id;
         echo header("Location: home.php");  
 
-        // Register success log       
+             
         insertLog("INFO", 1, " User ID ".$last_id." Register Successful");
         insertLog("INFO", 1, " User ID ".$_SESSION['ID']." successfully login to the system");
     }
@@ -166,7 +164,6 @@ if(isset($_POST['register'])) {
     <div class="container-fluid">
         <div class="row">
 
-            <!-- BRAND SECTION -->
             <div class="col-6 home-left">
                 <h1 class="brand-title text-center "> Welcome To <br> The CCIT Forum.</h1>
                 <div class="brand-list">
@@ -185,10 +182,10 @@ if(isset($_POST['register'])) {
             </div>
 
             <div class="col-6 home-right">
-                <!-- BRAND SECTION -->
+                
                 <div class="row">
 
-                    <!-- Login Section -->
+                    
                     <div class="login">
                         <h5 class="text-muted text-center">National University - Manila</h5>
                         <p class="text-muted">College of Computing and Information Technologies</p>
@@ -217,7 +214,7 @@ if(isset($_POST['register'])) {
                         </div>
                     </div>
 
-                    <!-- Register Section -->
+                    
                     <div class="register">
                         <h5 class="text-muted text-center">National University - Manila</h5>
                         <p class="text-muted">College of Computing and Information Technologies</p>
@@ -262,7 +259,7 @@ if(isset($_POST['register'])) {
         </div>
     </div>
 
-    <!-- Footer Section -->
+    
     <footer class="footer bg-light fixed-bottom">
         <div class="container">
             <span class="text-muted text-center footer-text"> The College of Computing and Information Technolgies
@@ -272,10 +269,10 @@ if(isset($_POST['register'])) {
 
 
 
-    <!-- JQuery library -->
+    
     <script src="js/jquery/jquery.min.js"></script>
 
-    <!-- JQuery Script -->
+    
     <script>
         $(".register").hide();
 

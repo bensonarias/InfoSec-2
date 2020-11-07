@@ -14,7 +14,6 @@ $sql = "SELECT * FROM users WHERE userID = '$id'";
 $users = $con->query($sql) or die($con->error);
 $row = $users->fetch_assoc();
 
-// Can access the page if it is an admin or it is the user's personal account!
 if((isset($_SESSION['Access']) && $_SESSION['Access'] == "admin" || $_SESSION['ID'] == $id)) {
     echo "<div class='float-right'> Welcome <b> ".$_SESSION['UserLogin']." </b> | Role: <b> ".$_SESSION['Access']."</b></div> <br>";
  } else {
@@ -23,14 +22,14 @@ if((isset($_SESSION['Access']) && $_SESSION['Access'] == "admin" || $_SESSION['I
 
 if(isset($_POST['submit'])) {
 
-    // Empty by default
+    
     $firstName = "";
     $lastName = "";
     $email = "";
     $password = '';
 
-   /// Validation
-    //First Name
+   
+    
     try{
     if(isFirstNameValid($_POST['firstName']) == 1) {
         $firstName = formValidate($_POST['firstName']);
@@ -39,7 +38,7 @@ if(isset($_POST['submit'])) {
         throw new customException("First Name Input Validation Error",1);
     }
 
-     //Last Name
+    
     if(isLastNameValid($_POST['lastName']) == 1) {
         $lastName = formValidate($_POST['lastName']);
     } else {
@@ -47,7 +46,7 @@ if(isset($_POST['submit'])) {
         throw new customException("Last Name Input Validation Error",1);
     }
 
-    // Email
+    
     if(isEmailValid($_POST['email']) == 1) {
         $email = formValidate($_POST['email']);
     } else {
@@ -56,7 +55,7 @@ if(isset($_POST['submit'])) {
     }
 
 
-      // Changing password
+    
       $oldPassword = $_POST['old-pass'];
       $newPassword = $_POST['new-pass'];
       $confirmPassword = $_POST['confirm-new-pass'];
@@ -85,7 +84,7 @@ if(isset($_POST['submit'])) {
     } else {
         $access = $_POST['access'];
     }
-    session_regenerate_id(true);// 02/10/2020
+    session_regenerate_id(true);
     $sql = "UPDATE `users` SET `firstName` = '$firstName', `lastName` = '$lastName', `email` = '$email', `password` = '$password', `access` = '$access' WHERE `userID` = $id";
 
     $con->query($sql) or die($con->error);
@@ -93,7 +92,7 @@ if(isset($_POST['submit'])) {
     $last_id = $con->insert_id;	
     insertLog("INFO", 1, " User ID ".$_SESSION['ID']." edit an account with an ID of ".$last_id);
 
-    //logout if the info was change on the own account.
+    
     if($_SESSION['ID'] == $id) {
         echo header("Location: logout.php");
     } else {
@@ -146,10 +145,7 @@ if(isset($_POST['submit'])) {
                                     value="<?php echo $row['email']?>">
                             </div>
 
-                            <!-- Edit this part that it doesnt retrieve the hashed password but just ask if they want to apply for new password -->
                             <div class="form-group">
-
-                                <!-- Create 3 input for enter old password, new password, confirm password -->
 
                                 <label for="password">Change Password</label>
 
@@ -167,7 +163,7 @@ if(isset($_POST['submit'])) {
                             
 
                             </div>
-                            <!-- Access -->
+                            
                             <?php if($_SESSION['Access'] == "admin") { ?>
                             <div class="form-group">
                                 <label for="password">Access</label>
@@ -192,10 +188,10 @@ if(isset($_POST['submit'])) {
 
     </div>
 
-    <!-- JQuery library -->
+    
     <script src="js/jquery/jquery.min.js"></script>
 
-    <!-- JQuery Script -->
+    
     <script>
         function unhidePassword1() {
             var x = document.getElementById("pass1");
