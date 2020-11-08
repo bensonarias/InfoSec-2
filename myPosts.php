@@ -34,6 +34,7 @@ if(isset($_SESSION['UserLogin'])) {
 
     <head>
         <title> CCIT Forum </title>
+        <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     </head>
@@ -42,15 +43,15 @@ if(isset($_SESSION['UserLogin'])) {
 
         <div class="container">
 
-            <h1 class="text-center"> The CCIT Wall </h1>
+            <h1 class="text-center"><b> The CCIT Wall </b></h1>
             <h3 class="text-center"> Homepage </h3>
 
             
             <h1> &nbsp;&nbsp;My Posts </h1>	
             <small> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;View your posts.</small>
             <div class="btn-group float-right" role="group" aria-label="Basic example">
-            <a class="btn btn-primary float-left font-weight-bold" href="/ccitforum/home.php"> News Feed </a> &nbsp;	              
-                <a class="btn btn-secondary float-left font-weight-bold" href="/ccitforum/myPosts.php?ID=<?php echo $id ?>"> My Posts </a> &nbsp;	             
+                <a class="btn btn-info float-left font-weight-bold" href="/ccitforum/home.php"> News Feed </a> &nbsp;	              
+                <a class="btn btn-primary float-left font-weight-bold" href="/ccitforum/myPosts.php?ID=<?php echo $id ?>"> My Posts </a> &nbsp;	             
                 <a class="btn btn-success float-left font-weight-bold" href="/ccitforum/accounts.php"> Accounts </a> &nbsp;	 
                 <a class="btn btn-danger float-left font-weight-bold" href="/ccitforum/logout.php"> Logout </a>
             </div>	
@@ -92,7 +93,7 @@ if(isset($_SESSION['UserLogin'])) {
                     <form action="delete.php" onSubmit="return confirm('Do you really want to delete this post?')" method="post" accept-charset="utf-8">
                                 <button type="submit" class="view btn btn-danger btn-sm float-right" name="deletePost"><b>Delete Post</b></button>
                                 <input type="hidden" class="<style>" name="ID" value="<?php echo $userPostRow['postID']?>">
-                                <a class="view btn btn-warning btn-sm float-right" name="update" style="color:white"
+                                <a class="view btn btn-warning btn-sm float-right" name="update" style="margin-right: 10px; color:white"
                                 href="/ccitforum/editPost.php?ID=<?php echo $userPostRow['postID']?>"><b>Edit Post</b></a>
                     </form>
                     
@@ -106,7 +107,7 @@ if(isset($_SESSION['UserLogin'])) {
                 </div>
             </div> <br>
             <?php } while($userPostRow = $userPosts->fetch_assoc()) ?>
-            <?php } else { echo "<div class='display-4'> No posts yet! </div>"; } ?>
+            <?php } else { echo "<div class='display-4'> No posts yet!</div>"; } ?>
             </div>
     </body>
 </html>

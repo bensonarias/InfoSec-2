@@ -33,23 +33,25 @@ if(isset($_SESSION['UserLogin'])) {
 
     <head>
         <title> CCIT Forum </title>
+        <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     </head>
 
-    <body>
+    <body style="background-image: url('images/backg.svg'); background-size: cover; background-repeat: no-repeat;">
 
         <div class="container">
-
-            <h1 class="text-center"> The CCIT Wall </h1>
+            
+             <h1 class="text-center"><b> The CCIT Wall </b> </h1>
             <h3 class="text-center"> Homepage </h3>
+            
 
            
             <h1>&nbsp; News Feed </h1>
             <small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  View the latest post.</small>
             <div class="btn-group float-right font-weight-bold" role="group" aria-label="Basic example">
-                <a class="btn btn-primary float-left font-weight-bold" href="/ccitforum/home.php"> News Feed </a>&nbsp;
-                <a class="btn btn-secondary float-left font-weight-bold" href="/ccitforum/myPosts.php"> My Posts </a>&nbsp;
+                <a class="btn btn-info float-left  font-weight-bold" href="/ccitforum/home.php"> News Feed </a>&nbsp;
+                <a class="btn btn-primary float-left font-weight-bold" href="/ccitforum/myPosts.php"> My Posts </a>&nbsp;
                 <a class="btn btn-success float-left font-weight-bold" href="/ccitforum/accounts.php"> Accounts </a>&nbsp;
                 <a class="btn btn-danger float-left font-weight-bold" href="/ccitforum/logout.php"> Logout </a>
             </div>
@@ -82,7 +84,6 @@ if(isset($_SESSION['UserLogin'])) {
             
             <h3> &nbsp;&nbsp;News Feed </h3>
             <?php if($posts->num_rows > 0) { ?>
-            <h3>&nbsp;&nbsp; Recent Posts </h3>
             <?php do { ?>
             <div class="card">
                 <div class="card-header">

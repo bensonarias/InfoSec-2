@@ -18,7 +18,7 @@ if (!isset($_SESSION['UserLogin'])) {
 }
 
 if (isset($_SESSION['UserLogin'])) {
-    echo "<div class='float-right'> Welcome <b> " . $_SESSION['UserLogin'] . " </b> Role: <b> " . $_SESSION['Access'] . "</b></div> <br>";
+    echo "<div class='float-right'> Welcome <b> " . $_SESSION['UserLogin'] . " </b> | Role: <b> " . $_SESSION['Access'] . "</b></div> <br>";
 } else {
     echo "Welcome guest!";
 }
@@ -30,6 +30,7 @@ if (isset($_SESSION['UserLogin'])) {
 
 <head>
     <title> CCIT Forum </title>
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 
@@ -37,25 +38,27 @@ if (isset($_SESSION['UserLogin'])) {
 
 
     <div class="container">
-
-        <h1 class="text-center"> The CCIT Wall </h1>
-        <h3 class="text-center"> Homepage </h3>
+        <h1 class="text-center"><b> The CCIT Wall </b></h1>
+        <h3 class="text-center">Homepage</h3>
+        
 
         
         <h1> Accounts </h1>
-        <small> View All Users.</small>
+        <small> View All Users</small>
         <div class="btn-group float-right" role="group" aria-label="">
-            <a class="btn btn-primary float-left font-weight-bold" href="/ccitforum/home.php"> News Feed </a>&nbsp;
-            <a class="btn btn-secondary float-left font-weight-bold" href="/ccitforum/myPosts.php"> My Posts </a>&nbsp;
+            <a class="btn btn-info float-left font-weight-bold" href="/ccitforum/home.php"> News Feed </a>&nbsp;
+            <a class="btn btn-primary float-left font-weight-bold" href="/ccitforum/myPosts.php"> My Posts </a>&nbsp;
             <a class="btn btn-success float-left font-weight-bold" href="/ccitforum/accounts.php"> Accounts </a>&nbsp;
             <a class="btn btn-danger float-left font-weight-bold" href="/ccitforum/logout.php"> Logout </a>
         </div>
+        <br>	
+        <br>
         <hr>
 
         <div class="btn-group float-right" role="group" arial-label="">
    
             <?php if ($_SESSION['Access'] == "admin") { ?>
-                <a class="btn btn-link float-right font-weight-bold" href="/ccitforum/add.php"> Add New Account </a> <br> <br>
+                <a class="btn btn-link float-right font-weight-bold text-decoration-none" href="/ccitforum/add.php"> Add New Account </a> <br> <br>
             <?php } ?>
 
             
@@ -85,7 +88,7 @@ if (isset($_SESSION['UserLogin'])) {
 
                     
                     <?php if ($_SESSION['Access'] == "admin") { ?>
-                        <th scope="col">Password</th>
+                      
                         <th scope="col">Access</th>
                         <th scope="col">Update</th>
                         <th scope="col">Delete</th>
@@ -107,7 +110,7 @@ if (isset($_SESSION['UserLogin'])) {
 
                             
                             <?php if ($_SESSION['Access'] == "admin") { ?>
-                                <td> <?php echo $row['password']; ?> </td>
+                               
                                 <td> <?php echo $row['access']; ?> </td>
 
                                 <td>

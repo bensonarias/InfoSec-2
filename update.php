@@ -114,6 +114,8 @@ if(isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add New User </title>
+
+    <link rel="stylesheet" href="css/addStyle.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
@@ -184,7 +186,7 @@ if(isset($_POST['submit'])) {
                             <input type="submit" name="submit" class="btn btn-success float-right"
                                 value="Save Changes"></input>
                         </form>
-                        <a id="loginBtn" class="btn btn-link" href="/ccitforum/accounts.php"> Back to User's List. </a>
+                        <a id="loginBtn" class="btn btn-link" href="/ccitforum/accounts.php"> <b>Back to User's List</b> </a>
                     </div>
                 </div>
         </div>
