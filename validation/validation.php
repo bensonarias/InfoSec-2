@@ -3,7 +3,7 @@
 define("EMAIL", "/\S+@\S+\.\S+/"); 
 define("NAME", "/^[a-z A-Z,.\-\ñ\Ñ]{3,16}$/i"); 
 
-define("PASSWORD", "/^(?=\P{Ll}*\p{Ll})(?=\P{Lu}*\p{Lu})(?=\P{N}*\p{N})(?=[\p{L}\p{N}]*[^\p{L}\p{N}])[\s\S]{8,19}$/"); 
+define("PASSWORD", "/^(?![^a-zA-Z0-9])(?=\P{Ll}*\p{Ll})(?=\P{Lu}*\p{Lu})(?=\P{N}*\p{N})(?=[\p{L}\p{N}]*[^\p{L}\p{N}])[\s\S]{8,19}$/"); 
 
 
 define("SUBJECT", "/^[\w,.!\-]{4,15}$/i"); 

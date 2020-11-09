@@ -1,7 +1,7 @@
 <?php
 
 
-include "errorhandler/sql_logging.php";
+
 
 if(!isset($_SESSION)) {
     session_start();
