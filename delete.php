@@ -12,7 +12,6 @@ if(!isset($_SESSION['Access']) && $_SESSION['Access'] == "admin") {
 }
 
 include_once "connections/connection.php";
-include_once "connections/connection.php";
 include "validation/validation.php";
 include "errorhandler/errorhandler.php";
 include "errorhandler/sql_logging.php";

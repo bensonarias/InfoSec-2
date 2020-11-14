@@ -33,15 +33,9 @@ if(isset($_POST['submit'])) {
     $lastName = "";
     $email = "";
     $password = '';
-<<<<<<< HEAD
-
-   
-    
-=======
     $cond = false;
    /// Validation
     //First Name
->>>>>>> 60bc4dc9d82c8b3500415c9f68f88dbf6fbc4f80
     try{
     if(isFirstNameValid($_POST['firstName']) == 1) {
         $firstName = formValidate($_POST['firstName']);
@@ -72,13 +66,8 @@ if(isset($_POST['submit'])) {
         insertLog("ERROR",1,"Email Input Validation Error");
     }
 
-<<<<<<< HEAD
-
-    
-=======
     if(!empty($_POST['old-pass'])){
       // Changing password
->>>>>>> 60bc4dc9d82c8b3500415c9f68f88dbf6fbc4f80
       $oldPassword = $_POST['old-pass'];
       $newPassword = $_POST['new-pass'];
       $confirmPassword = $_POST['confirm-new-pass'];
@@ -113,12 +102,8 @@ if(isset($_POST['submit'])) {
     } else {
         $access = $_POST['access'];
     }
-<<<<<<< HEAD
-    session_regenerate_id(true);
-=======
     session_regenerate_id(true);// 02/10/2020
     if(!empty($_POST['old-pass'])){
->>>>>>> 60bc4dc9d82c8b3500415c9f68f88dbf6fbc4f80
     $sql = "UPDATE `users` SET `firstName` = '$firstName', `lastName` = '$lastName', `email` = '$email', `password` = '$password', `access` = '$access' WHERE `userID` = $id";
     }else{
         $sql = "UPDATE `users` SET `firstName` = '$firstName', `lastName` = '$lastName', `email` = '$email', `access` = '$access' WHERE `userID` = $id";     

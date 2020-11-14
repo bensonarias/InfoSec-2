@@ -9,8 +9,6 @@ include_once "connections/connection.php";
 include "errorhandler/errorhandler.php";
 include "errorhandler/sql_logging.php";
 include "validation/validation.php";
-include "errorhandler/errorhandler.php";
-include "errorhandler/sql_logging.php";
 $con = connection();
 
 if(isset($_SESSION['Access']) && $_SESSION['Access'] == "admin") {
