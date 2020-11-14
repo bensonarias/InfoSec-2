@@ -20,7 +20,9 @@ $con = connection();
 
 if(isset($_POST['deleteUser'])) {
     $id = $_POST['ID'];
+    $sqldeletepost = "DELETE FROM posts WHERE userID = '$id'";
     $sql = "DELETE FROM users WHERE userID = '$id'";
+    $con->query($sqldeletepost) or die ($con->error);
     $con->query($sql) or die ($con->error);
     insertLog("WARNING", 1, " User ID ".$_SESSION['ID']." deleted an account with an ID of ".$id);
 

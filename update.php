@@ -19,13 +19,18 @@ $row = $users->fetch_assoc();
 $firstN = $row['firstName'];
 $lastN = $row['lastName'];
 $eM = $row['email'];
-
 if((isset($_SESSION['Access']) && $_SESSION['Access'] == "admin" || $_SESSION['ID'] == $id)) {
     echo "<div class='float-right'> Welcome <b> ".$_SESSION['UserLogin']." </b> | Role: <b> ".$_SESSION['Access']."</b></div> <br>";
  } else {
      echo header("Location: home.php");
 }
 
+if($_SESSION['Access'] == "admin" ){
+    $style = "style='display:none;'";
+}
+if($_SESSION['Access'] == "admin" && $_SESSION['ID'] ==  $row['userID']){
+    $style = "style='display:block;'";
+}
 if(isset($_POST['submit'])) {
 
     
@@ -65,9 +70,10 @@ if(isset($_POST['submit'])) {
         echo "Error: Invalid Email!";
         insertLog("ERROR",1,"Email Input Validation Error");
     }
+    
 
-    if(!empty($_POST['old-pass'])){
-      // Changing password
+    if(!empty($_POST['old-pass'])|| $_SESSION['Access'] == "admin" && $_SESSION['ID'] ==  $row['userID']){
+      // Changing password user
       $oldPassword = $_POST['old-pass'];
       $newPassword = $_POST['new-pass'];
       $confirmPassword = $_POST['confirm-new-pass'];
@@ -75,6 +81,29 @@ if(isset($_POST['submit'])) {
       echo $confirmPassword;
 
       if(password_verify($oldPassword, $row['password']) && $newPassword == $confirmPassword) {
+          if(isPasswordValid($_POST['new-pass']) == 1) {
+              $password = $_POST['new-pass'];
+              $password = password_hash($password, PASSWORD_BCRYPT);
+          } else {
+            $cond = true;
+              echo "Error: Invalid Password!";
+              
+              throw new customException("Invalid Pasword",1);
+          }
+      } else {
+        $cond = true;
+        $_POST['old-pass']=null;
+          echo "Error: Wrong Old Password or New Password doesn't match to the Confirm Password!"; 
+           throw new customException("Change Password Validation Error",1);
+        }
+    }else if ($_SESSION['Access'] == "admin" ){
+         // Changing password admin
+      $newPassword = $_POST['new-pass'];
+      $confirmPassword = $_POST['confirm-new-pass'];
+
+      echo $confirmPassword;
+
+      if($newPassword == $confirmPassword) {
           if(isPasswordValid($_POST['new-pass']) == 1) {
               $password = $_POST['new-pass'];
               $password = password_hash($password, PASSWORD_BCRYPT);
@@ -103,8 +132,10 @@ if(isset($_POST['submit'])) {
         $access = $_POST['access'];
     }
     session_regenerate_id(true);// 02/10/2020
-    if(!empty($_POST['old-pass'])){
+    if(!empty($_POST['old-pass'])|| $_SESSION['Access'] == "admin" && $_SESSION['ID'] ==  $row['userID']){
     $sql = "UPDATE `users` SET `firstName` = '$firstName', `lastName` = '$lastName', `email` = '$email', `password` = '$password', `access` = '$access' WHERE `userID` = $id";
+    }else if($_SESSION['Access'] == "admin" && !empty($_POST['new-pass'])){
+        $sql = "UPDATE `users` SET `firstName` = '$firstName', `lastName` = '$lastName', `email` = '$email', `password` = '$password', `access` = '$access' WHERE `userID` = $id";
     }else{
         $sql = "UPDATE `users` SET `firstName` = '$firstName', `lastName` = '$lastName', `email` = '$email', `access` = '$access' WHERE `userID` = $id";     
     }
@@ -173,8 +204,8 @@ if(isset($_POST['submit'])) {
                                 <label for="password">Change Password</label>
 
                                 <input id="pass1" type="password" class="form-control" name="old-pass"
-                                    value="" placeholder="Enter Old Password">
-                                <input type="checkbox" onclick="unhidePassword1()"> Show Password </input>
+                                    value="" placeholder="Enter Old Password" <?php echo $style;?>>
+                                <input type="checkbox" onclick="unhidePassword1()" <?php echo $style;?>> Show Password </input>
 
                                 <input id="pass2" type="password" class="form-control" name="new-pass"
                                     value="" placeholder="Enter New Password">
