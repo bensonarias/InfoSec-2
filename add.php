@@ -16,6 +16,10 @@ if(isset($_SESSION['Access']) && $_SESSION['Access'] == "admin") {
 } else {
     echo header("Location: home.php");
 }
+$firstN = "";
+$lastN = "";
+$eM = "";
+$cond = false;
 
 if(isset($_POST['submit'])) {
    
@@ -23,34 +27,54 @@ if(isset($_POST['submit'])) {
     if(isFirstNameValid($_POST['firstName']) == 1) {
         $firstName = formValidate($_POST['firstName']);
     } else {
-        throw new customException("First Name Input Validation Error",1);
+        $cond = true;
+        $firstN = $_POST['firstName'];
+        $lastN = $_POST['lastName'];
+        $eM = $_POST['email'];
+        echo "Error: Invalid First Name!";
+        insertLog("ERROR",1,"First Name Input Validation Error");
     }
 
     
     if(isLastNameValid($_POST['lastName']) == 1) {
         $lastName = formValidate($_POST['lastName']);
     } else {
-        throw new customException("Last Name Input Validation Error",1);
+        $cond = true;
+        $firstN = $_POST['firstName'];
+        $lastN = $_POST['lastName'];
+        $eM = $_POST['email'];
+        echo "Error: Invalid Last Name!";
+        insertLog("ERROR",1,"Last Name Input Validation Error");
     }
 
     
     if(isEmailValid($_POST['email']) == 1) {
         $email = formValidate($_POST['email']);
     } else {
-        throw new customException("Email Input Validation Error",1);
+        $cond = true;
+        $firstN = $_POST['firstName'];
+        $lastN = $_POST['lastName'];
+        $eM = $_POST['email'];
+        echo "Error: Invalid Email!";
+        insertLog("ERROR",1,"Email Input Validation Error");
     }
 
     
     if(isPasswordValid($_POST['password']) == 1) {
         $password = $_POST['password'];
     } else {
+        $cond = true;
+        $firstN = $_POST['firstName'];
+        $lastN = $_POST['lastName'];
+        $eM = $_POST['email'];
+        echo "Error: Invalid Password!";
         throw new customException("Password Input Validation Error",1);
         
     }
 }catch(customException $e){
     insertLog("ERROR",$e->errorCode(),$e->errorMessage());
 }
-    
+    if($cond == false){
     $hash = password_hash($password, PASSWORD_BCRYPT);
     session_regenerate_id(true);
     $access = $_POST['access'];
@@ -62,6 +86,7 @@ if(isset($_POST['submit'])) {
     insertLog("INFO", 1, " User ID ".$_SESSION['ID']." add a new user with an ID of ".$last_id);
 
    echo header("Location: accounts.php");
+    }
 }
 
 ?>
@@ -91,15 +116,15 @@ if(isset($_POST['submit'])) {
                     <form action="" method="post" onSubmit="return confirm('Do you really want to add this user?')">
                         <div class="form-group">
                             <label for="firstName">First Name</label>
-                            <input type="name" class="form-control" name="firstName">
+                            <input type="name" class="form-control" value="<?php echo $firstN?>" name="firstName">
                         </div>
                         <div class="form-group">
                             <label for="lastName">Last Name</label>
-                            <input type="name" class="form-control" name="lastName">
+                            <input type="name" class="form-control" value="<?php echo $lastN?>" name="lastName">
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" name="email">
+                            <input type="email" class="form-control" value="<?php echo $eM?>" name="email">
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
