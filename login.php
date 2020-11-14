@@ -74,7 +74,7 @@ if(isset($_POST['register'])) {
     if(isFirstNameValid($_POST['firstName']) == 1) {
         $firstName = formValidate($_POST['firstName']);
     } else {
-        echo "Error: Invalid First Name!";
+        $loginErrorMsg="Invalid First Name!";
         throw new customException("First Name Input Validation Error",1);
     }
 
@@ -82,7 +82,7 @@ if(isset($_POST['register'])) {
     if(isLastNameValid($_POST['lastName']) == 1) {
         $lastName = formValidate($_POST['lastName']);
     } else {
-        echo "Error: Invalid Last Name!";
+        $loginErrorMsg="Invalid Last Name!";
         throw new customException("Last Name Input Validation Error",1);
     }
 
@@ -90,7 +90,7 @@ if(isset($_POST['register'])) {
     if(isEmailValid($_POST['email']) == 1) {
         $email = formValidate($_POST['email']);
     } else {
-        echo "Error: Invalid Email!";
+        $loginErrorMsg="Invalid Email!";
         throw new customException("Email Input Validation Error",1);
     }
 
@@ -98,6 +98,7 @@ if(isset($_POST['register'])) {
     if(isPasswordValid($_POST['password']) == 1) {
         $password = $_POST['password'];
     } else {
+        $loginErrorMsg="Invalid Password!";
         throw new customException("Password Input Validation Error",1);
     }
 

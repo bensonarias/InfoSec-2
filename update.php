@@ -1,4 +1,5 @@
 <?php
+$loginErrorMsg = "";
 
 if(!isset($_SESSION)) {
     session_start();
@@ -47,7 +48,7 @@ if(isset($_POST['submit'])) {
     } else {
         $cond = true;
          $firstN =$_POST['firstName'];
-        echo "Error: Invalid First Name!";
+         $loginErrorMsg="Invalid First Name!";
         insertLog("ERROR",1,"First Name Input Validation Error");
     }
 
@@ -57,7 +58,7 @@ if(isset($_POST['submit'])) {
     } else {
         $cond = true;
         $lastN =$_POST['lastName'];
-        echo "Error: Invalid Last Name!";
+        $loginErrorMsg="Invalid Last Name!";
         insertLog("ERROR",1,"Last Name Input Validation Error");
     }
 
@@ -67,7 +68,7 @@ if(isset($_POST['submit'])) {
     } else {
         $cond = true;
         $eM = $_POST['email'];
-        echo "Error: Invalid Email!";
+        $loginErrorMsg="Invalid Email!";
         insertLog("ERROR",1,"Email Input Validation Error");
     }
     
@@ -78,7 +79,7 @@ if(isset($_POST['submit'])) {
       $newPassword = $_POST['new-pass'];
       $confirmPassword = $_POST['confirm-new-pass'];
 
-      echo $confirmPassword;
+    //   echo $confirmPassword;
 
       if(password_verify($oldPassword, $row['password']) && $newPassword == $confirmPassword) {
           if(isPasswordValid($_POST['new-pass']) == 1) {
@@ -86,14 +87,14 @@ if(isset($_POST['submit'])) {
               $password = password_hash($password, PASSWORD_BCRYPT);
           } else {
             $cond = true;
-              echo "Error: Invalid Password!";
+            $loginErrorMsg="Invalid Password!";
               
               throw new customException("Invalid Pasword",1);
           }
       } else {
         $cond = true;
         $_POST['old-pass']=null;
-          echo "Error: Wrong Old Password or New Password doesn't match to the Confirm Password!"; 
+        $loginErrorMsg="Wrong Old Password or New Password doesn't match to the Confirm Password!";
            throw new customException("Change Password Validation Error",1);
         }
     }else if ($_SESSION['Access'] == "admin" ){
@@ -101,7 +102,7 @@ if(isset($_POST['submit'])) {
       $newPassword = $_POST['new-pass'];
       $confirmPassword = $_POST['confirm-new-pass'];
 
-      echo $confirmPassword;
+    //   echo $confirmPassword;
 
       if($newPassword == $confirmPassword) {
           if(isPasswordValid($_POST['new-pass']) == 1) {
@@ -109,7 +110,7 @@ if(isset($_POST['submit'])) {
               $password = password_hash($password, PASSWORD_BCRYPT);
           } else {
             $cond = true;
-              echo "Error: Invalid Password!";
+            $loginErrorMsg="Invalid Password!";
               
               throw new customException("Invalid Pasword",1);
           }
@@ -183,6 +184,7 @@ if(isset($_POST['submit'])) {
                     <div class="card-body">
                         <form action="" method="post"
                             onSubmit="return confirm('Do you really want to update this user? You might be logged out if it is successful!')">
+                            <?php if($loginErrorMsg != "") echo "<p> <font color=red  font face='poppins' size='2pt'>$loginErrorMsg</font> </p>" . "<br>"; ?>
                             <div class="form-group">
                                 <label for="firstName">First Name</label>
                                 <input type="name" class="form-control" name="firstName"
