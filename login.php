@@ -165,8 +165,9 @@ if(isset($_POST['register'])) {
         <div class="row">
 
             <div class="col-6 home-left">
-                <h1 class="brand-title text-center "> Welcome To <br> The CCIT Forum.</h1>
-                <div class="brand-list">
+                    <h1 class="brand-title text-center text-white"> <b>The CCIT Forum.</b></h1>
+                
+                <div class="brand-list text-white">
                     <ul>
                         <li>Share your thoughts!</li>
                         <li>Communicate with other CCIT students!</li>
@@ -174,11 +175,11 @@ if(isset($_POST['register'])) {
                     </ul>
                 </div>
 
-                <div class="brand-subtitle">
-                    <h4>"This is the subtitle put it here."</h3>
-                </div>
+                <!-- <div class="brand-subtitle">
+                    <h4>"Insert Subtitle Here"</h3>
+                </div> -->
 
-                <br><br><br>
+                
             </div>
 
             <div class="col-6 home-right">
@@ -200,14 +201,18 @@ if(isset($_POST['register'])) {
                                     <div class="form-group">
                                         <label for="password">Password</label>
                                         <input id="pass" type="password" autocomplete="off" class="form-control"
-                                            name="password"> <input type="checkbox" onclick="unhidePassword()"> Show
+                                            name="password"> <input id = "passW" type="checkbox" onclick="unhidePassword()"> Show
                                         Password </input>
                                     </div>
 
                                     <input type="submit" name="login" class="btn btn-primary float-right"
                                         value="Sign In"></input>
                                 </form>
-                                <?php if($loginErrorMsg != "") echo $loginErrorMsg . "<br>"; ?>
+                                
+                                
+
+                                <?php if($loginErrorMsg != "") echo "<p> <font color=red  font face='poppins' size='2pt'>$loginErrorMsg</font> </p>" . "<br>"; ?>
+                                
                                 <p> Not yet a member? <button id="registerBtn" class="btn btn-link"> Sign Up Now!
                                     </button></p>
                             </div>
@@ -237,11 +242,11 @@ if(isset($_POST['register'])) {
                                     <div class="form-group">
                                         <label for="password">Password</label>
                                         <input id="pass2" type="password" autocomplete="off" class="form-control"
-                                            name="password"> <input type="checkbox" onclick="unhidePassword()"> Show
+                                            name="password"> <input id="passW" type="checkbox" onclick="unhidePassword()"> Show
                                         Password </input>
                                         <small id="passwordHelpBlock" class="form-text text-muted">
-                                            At least 8 characters long, <br> contains at least 1 uppercase, 1 lowercase,
-                                            1 number, <br> 1 special character and SHOULD NOT start with a special
+                                            At least <b>8 characters</b> long, <br> contains at least <b> 1 uppercase, 1 lowercase,
+                                            1 number, <br> 1 special character </b> and <b>SHOULD NOT</b> start with a special
                                             character
                                         </small>
                                     </div>
