@@ -114,6 +114,7 @@ if(isset($_POST['register'])) {
     $total = $user->num_rows;
 
     if($total > 0) {
+        $loginErrorMsg="Please choose other email address! Email already exist!";
         throw new customException("Duplicate Email");
     } else {
         $insertSql = "INSERT INTO `users` (`firstName`,`lastName`, `email`,`password`,`access`) VALUES ('$firstName', '$lastName', '$email','$hash','user')";
@@ -254,6 +255,7 @@ if(isset($_POST['register'])) {
                                     <input type="submit" name="register" class="btn btn-primary float-right"
                                         value="Sign Up"></input>
                                 </form>
+                                <?php if($loginErrorMsg != "") echo "<p> <font color=red  font face='poppins' size='2pt'>$loginErrorMsg</font> </p>" . "<br>"; ?>
                                 <p> Already a member? <button id="loginBtn" class="btn btn-link"> Sign In Here.
                                     </button></p>
                             </div>

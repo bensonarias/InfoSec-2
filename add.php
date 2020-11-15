@@ -1,5 +1,7 @@
 <?php
 
+$errorMsg = "";
+
 if(!isset($_SESSION)) {
     session_start();
 }
@@ -31,7 +33,8 @@ if(isset($_POST['submit'])) {
         $firstN = $_POST['firstName'];
         $lastN = $_POST['lastName'];
         $eM = $_POST['email'];
-        echo "Error: Invalid First Name!";
+        $errorMsg="Please input all fields!";
+
         insertLog("ERROR",1,"First Name Input Validation Error");
     }
 
@@ -43,7 +46,7 @@ if(isset($_POST['submit'])) {
         $firstN = $_POST['firstName'];
         $lastN = $_POST['lastName'];
         $eM = $_POST['email'];
-        echo "Error: Invalid Last Name!";
+        $errorMsg="Please input all fields!";
         insertLog("ERROR",1,"Last Name Input Validation Error");
     }
 
@@ -55,7 +58,7 @@ if(isset($_POST['submit'])) {
         $firstN = $_POST['firstName'];
         $lastN = $_POST['lastName'];
         $eM = $_POST['email'];
-        echo "Error: Invalid Email!";
+        $errorMsg="Please input all fields!";
         insertLog("ERROR",1,"Email Input Validation Error");
     }
 
@@ -67,7 +70,7 @@ if(isset($_POST['submit'])) {
         $firstN = $_POST['firstName'];
         $lastN = $_POST['lastName'];
         $eM = $_POST['email'];
-        echo "Error: Invalid Password!";
+        $errorMsg="Please input all fields!";
         throw new customException("Password Input Validation Error",1);
         
     }
@@ -114,6 +117,8 @@ if(isset($_POST['submit'])) {
             <div class="card">
                 <div class="card-body">
                     <form action="" method="post" onSubmit="return confirm('Do you really want to add this user?')">
+                    <?php if($errorMsg != "") echo "<p> <font color=red  font face='poppins' size='2pt'>$errorMsg</font> </p>" . "<br>"; ?>
+
                         <div class="form-group">
                             <label for="firstName">First Name</label>
                             <input type="name" class="form-control" value="<?php echo $firstN?>" name="firstName">
@@ -135,8 +140,10 @@ if(isset($_POST['submit'])) {
                                 <select name="access" class="form-control">
                                     <option value="user" selected>User</option>
                                     <option value="admin">Admin</option>
+
                                 </select>
                             </div>
+
                         <input type="submit" name="submit" class="btn btn-success float-right" value="Add New User"></input>
                     </form>
                 </div>
