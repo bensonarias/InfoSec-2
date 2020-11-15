@@ -34,14 +34,12 @@ if($_SESSION['Access'] == "admin" && $_SESSION['ID'] ==  $row['userID']){
 }
 if(isset($_POST['submit'])) {
 
-    
     $firstName = "";
     $lastName = "";
     $email = "";
     $password = '';
     $cond = false;
-   /// Validation
-    //First Name
+
     try{
     if(isFirstNameValid($_POST['firstName']) == 1) {
         $firstName = formValidate($_POST['firstName']);
@@ -52,7 +50,6 @@ if(isset($_POST['submit'])) {
         insertLog("ERROR",1,"First Name Input Validation Error");
     }
 
-    
     if(isLastNameValid($_POST['lastName']) == 1) {
         $lastName = formValidate($_POST['lastName']);
     } else {
@@ -62,7 +59,6 @@ if(isset($_POST['submit'])) {
         insertLog("ERROR",1,"Last Name Input Validation Error");
     }
 
-    
     if(isEmailValid($_POST['email']) == 1) {
         $email = formValidate($_POST['email']);
     } else {
@@ -71,15 +67,11 @@ if(isset($_POST['submit'])) {
         $loginErrorMsg="Invalid Email!";
         insertLog("ERROR",1,"Email Input Validation Error");
     }
-    
 
     if(!empty($_POST['old-pass'])|| $_SESSION['Access'] == "admin" && $_SESSION['ID'] ==  $row['userID']){
-      // Changing password user
       $oldPassword = $_POST['old-pass'];
       $newPassword = $_POST['new-pass'];
       $confirmPassword = $_POST['confirm-new-pass'];
-
-    //   echo $confirmPassword;
 
       if(password_verify($oldPassword, $row['password']) && $newPassword == $confirmPassword) {
           if(isPasswordValid($_POST['new-pass']) == 1) {
@@ -88,7 +80,6 @@ if(isset($_POST['submit'])) {
           } else {
             $cond = true;
             $loginErrorMsg="Invalid Password!";
-              
               throw new customException("Invalid Pasword",1);
           }
       } else {
@@ -98,11 +89,8 @@ if(isset($_POST['submit'])) {
            throw new customException("Change Password Validation Error",1);
         }
     }else if ($_SESSION['Access'] == "admin" ){
-         // Changing password admin
       $newPassword = $_POST['new-pass'];
       $confirmPassword = $_POST['confirm-new-pass'];
-
-    //   echo $confirmPassword;
 
       if($newPassword == $confirmPassword) {
           if(isPasswordValid($_POST['new-pass']) == 1) {
@@ -111,7 +99,6 @@ if(isset($_POST['submit'])) {
           } else {
             $cond = true;
             $loginErrorMsg="Invalid Password!";
-              
               throw new customException("Invalid Pasword",1);
           }
       } else {
@@ -123,7 +110,6 @@ if(isset($_POST['submit'])) {
     }
     }catch(customException $e){
         insertLog("ERROR",$e->errorCode(),$e->errorMessage());
-       
     }
     if($cond == false){
 
@@ -132,7 +118,7 @@ if(isset($_POST['submit'])) {
     } else {
         $access = $_POST['access'];
     }
-    session_regenerate_id(true);// 02/10/2020
+    session_regenerate_id(true);
     if(!empty($_POST['old-pass'])|| $_SESSION['Access'] == "admin" && $_SESSION['ID'] ==  $row['userID']){
     $sql = "UPDATE `users` SET `firstName` = '$firstName', `lastName` = '$lastName', `email` = '$email', `password` = '$password', `access` = '$access' WHERE `userID` = $id";
     }else if($_SESSION['Access'] == "admin" && !empty($_POST['new-pass'])){
@@ -145,15 +131,12 @@ if(isset($_POST['submit'])) {
     $last_id = $con->insert_id;	
     insertLog("INFO", 1, " User ID ".$_SESSION['ID']." edit an account with an ID of ".$last_id);
 
-    
     if($_SESSION['ID'] == $id) {
         echo header("Location: logout.php");
     } else {
         echo header("Location: accounts.php");
     }
     }
-
-  
 }
 ?>
 
@@ -164,16 +147,13 @@ if(isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add New User </title>
-
     <link rel="stylesheet" href="css/addStyle.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 
 <body>
-
     <div class="container">
-
         <div class="register">
             <h1 class="text-center"> CCIT Forum Admin </h1>
             <h3 class="text-center">Edit User </h1>
@@ -202,7 +182,6 @@ if(isset($_POST['submit'])) {
                             </div>
 
                             <div class="form-group">
-
                                 <label for="password">Change Password</label>
 
                                 <input id="pass1" type="password" class="form-control" name="old-pass"
@@ -216,8 +195,6 @@ if(isset($_POST['submit'])) {
                                 <input id="pass3" type="password" class="form-control" name="confirm-new-pass"
                                     value="" placeholder="Confirm New Password">
                                 <input type="checkbox" onclick="unhidePassword3()" > Show Password </input>
-                            
-
                             </div>
                             
                             <?php if($_SESSION['Access'] == "admin") { ?>
@@ -241,12 +218,9 @@ if(isset($_POST['submit'])) {
                     </div>
                 </div>
         </div>
-
     </div>
 
-    
     <script src="js/jquery/jquery.min.js"></script>
-
     
     <script>
         function unhidePassword1() {
@@ -275,9 +249,6 @@ if(isset($_POST['submit'])) {
                 z.type = "password";
             }
         }
-         
-            
-
     </script>
 </body>
 

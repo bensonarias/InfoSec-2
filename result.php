@@ -37,13 +37,10 @@ if(isset($_SESSION['UserLogin'])) {
 </head>
 
 <body>
-
     <div class="container">
-
         <h1 class="text-center"> CCIT Forum Admin </h1>
         <h3 class="text-center"> Users Account </h3>
         
-         
          <h1> Accounts </h1>
             <small> View All Users.</small>
             <div class="btn-group float-right" role="group" aria-label="Basic example">
@@ -56,13 +53,11 @@ if(isset($_SESSION['UserLogin'])) {
             <br>
             <hr>
         
-        
         <a id="loginBtn" class="btn btn-link float-right" href="/ccitforum/update.php?ID=<?php echo $id?>"> Edit My Account. </a>
 
         <?php if($_SESSION['Access'] == "admin") { ?>
         <a id="loginBtn" class="btn btn-link float-right" href="/ccitforum/add.php"> Add New Account </a> <br> <br>
         <?php } ?>
-        
         
         <form action="result.php" method="get" accept-charset="utf-8">
             <div class="input-group mb-3">
@@ -72,7 +67,6 @@ if(isset($_SESSION['UserLogin'])) {
             </div>
             </div>
         </form>
-
         
         <table class="table table-striped">
 
@@ -85,7 +79,6 @@ if(isset($_SESSION['UserLogin'])) {
                         <th scope="col">Last Name</th>
                         <th scope="col">Email</th>
 
-                        
                         <?php if($_SESSION['Access'] == "admin") { ?>
                        
                         <th scope="col">Access</th>
@@ -96,7 +89,6 @@ if(isset($_SESSION['UserLogin'])) {
                 </thead>
     
             <tbody>
-          
                     <?php do {?>
                         <?php if($row['userID'] != $_SESSION['ID']) { ?>
                     <tr>
@@ -109,11 +101,9 @@ if(isset($_SESSION['UserLogin'])) {
                         <td> <?php echo $row['lastName'];?> </td>
                         <td> <?php echo $row['email'];?> </td>
 
-                        
                         <?php if($_SESSION['Access'] == "admin") { ?>
                    
                         <td> <?php echo $row['access'];?> </td>
-                        
                         <td>
                             <a class="view btn btn-warning btn-sm font-weight-bold" name="update"
                                 href="/ccitforum/update.php?ID=<?php echo $row['userID']?>">Update</a>

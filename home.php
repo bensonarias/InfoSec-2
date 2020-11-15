@@ -24,13 +24,10 @@ if(isset($_SESSION['UserLogin'])) {
 } else {
     echo "Welcome guest!";
 }
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
         <title> CCIT Forum </title>
         <link rel="stylesheet" href="css/style.css">
@@ -39,14 +36,9 @@ if(isset($_SESSION['UserLogin'])) {
     </head>
 
     <body style="background-image: url('images/backg.svg'); background-size: cover; background-repeat: no-repeat;">
-
         <div class="container">
-            
              <h1 class="text-center"><b> The CCIT Wall </b> </h1>
             <h3 class="text-center"> Homepage </h3>
-            
-
-           
             <h1>&nbsp; News Feed </h1>
             <small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  View the latest post.</small>
             <div class="btn-group float-right font-weight-bold" role="group" aria-label="Basic example">
@@ -59,7 +51,6 @@ if(isset($_SESSION['UserLogin'])) {
             <br>
             <hr>
 
-            
             <h3>&nbsp;&nbsp; Compose Post </h3>
             <div class="card">
                 <div class="card-body">
@@ -77,11 +68,7 @@ if(isset($_SESSION['UserLogin'])) {
                     </form>
                 </div>
             </div>
-
             <br>
-
-
-            
             <h3> &nbsp;&nbsp;News Feed </h3>
             <?php if($posts->num_rows > 0) { ?>
             <?php do { ?>
@@ -98,6 +85,5 @@ if(isset($_SESSION['UserLogin'])) {
             </div> <br>
             <?php } while($postRow = $posts->fetch_assoc()) ?>
             <?php } else { echo "<div class='display-4'> No posts yet! </div>"; } ?>
-    
     </body>
 <html>

@@ -18,24 +18,19 @@ $sql = "SELECT * FROM posts WHERE postID = '$id'";
 $posts = $con->query($sql) or die($con->error);
 $row = $posts->fetch_assoc();
 
-
-
 if($row['userID'] == $userID && $row['postID'] == $id) {
     echo "<div class='float-right'> Welcome <b> ".$_SESSION['UserLogin']." </b> Role: <b> ".$_SESSION['Access']."</b></div> <br>";
  } else {
      echo header("Location: myPosts.php");
 }
 
-
 if(isset($_POST['submit'])) {
     $subject = $_POST['subject'];
     $body = $_POST['body'];
     $sql = "UPDATE `posts` SET `subject` = '$subject', `body` = '$body' WHERE `userID` = $userID AND `postID` = $id";
     $con->query($sql) or die($con->error);
-
     $last_id = $con->insert_id;	
     insertLog("INFO", 1, " User ID ".$_SESSION['ID']." edited a post with an ID of ".$last_id);
-
     echo header("Location: myPosts.php");
 }
 ?>
@@ -71,6 +66,5 @@ if(isset($_POST['submit'])) {
                     </form>
                 </div>
             </div>
-
 </body>
 </html>

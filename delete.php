@@ -1,8 +1,5 @@
 <?php
 
-
-
-
 if(!isset($_SESSION)) {
     session_start();
 }
@@ -25,7 +22,6 @@ if(isset($_POST['deleteUser'])) {
     $con->query($sqldeletepost) or die ($con->error);
     $con->query($sql) or die ($con->error);
     insertLog("WARNING", 1, " User ID ".$_SESSION['ID']." deleted an account with an ID of ".$id);
-
     echo header("Location: accounts.php");
 }
 

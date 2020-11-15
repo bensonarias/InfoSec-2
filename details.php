@@ -13,11 +13,9 @@ $con = connection();
 
 $id = $_GET['ID'];
 
-
 $sql = "SELECT * FROM users WHERE userID = '$id'";
 $users = $con->query($sql) or die($con->error);
 $row = $users->fetch_assoc();
-
 
 $userPostSQL = "SELECT users.userID, users.firstName, users.lastName, users.email, posts.postID, posts.subject, posts.body, posts.dateAdded ".
             "FROM users JOIN posts ".
@@ -26,7 +24,6 @@ $userPostSQL = "SELECT users.userID, users.firstName, users.lastName, users.emai
             " ORDER BY posts.dateAdded DESC";
 $userPosts = $con->query($userPostSQL) or die($con->error);
 $userPostRow = $userPosts->fetch_assoc();
-
 
 if(isset($_SESSION['UserLogin'])) {
     echo "<div class='float-right'> Welcome <b> ".$_SESSION['UserLogin']." </b> Role: <b> ".$_SESSION['Access']."</b></div> <br>";
@@ -38,7 +35,6 @@ if(isset($_SESSION['UserLogin'])) {
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=" , initial-scale=1.0">
@@ -50,11 +46,9 @@ if(isset($_SESSION['UserLogin'])) {
 
 <body>
     <div class="container">
-
         <h1 class="text-center"> CCIT Forum Admin </h1>
         <h3 class="text-center"> View Details </h3>
         <br> <br>
-      
 
         <a id="loginBtn" class="btn btn-dark float-right" href="/ccitforum/accounts.php"> Back to User's List. </a>	
         <br><br>
@@ -65,12 +59,8 @@ if(isset($_SESSION['UserLogin'])) {
                 <h2> <b>Email</b> : <?php echo $row['email'];?> </h2>
                 <h2> <b>Access</b>: <?php echo $row['access'];?> </h2>
             </div>
-           
         </div>
-
         <br>
-
-       
 
         <?php if ($userPosts->num_rows > 0) { ?>	        
             <br>
@@ -87,10 +77,8 @@ if(isset($_SESSION['UserLogin'])) {
                     <?php echo $userPostRow['body'] ?>
                 </div>
             </div> <br>
-        
             <?php } while($userPostRow = $userPosts->fetch_assoc()) ?>
         <?php } else { echo "<div class='display-4'> No posts yet! </div>"; } ?>
-            
     </div>
 </body>
 </html>

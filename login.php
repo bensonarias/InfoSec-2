@@ -1,6 +1,6 @@
 <?php
     
- $loginErrorMsg = "";
+$loginErrorMsg = "";
 
 if(!isset($_SESSION)) {
     session_start();
@@ -12,8 +12,6 @@ include "errorhandler/errorhandler.php";
 include "errorhandler/sql_logging.php";
 $con = connection();
 
-
-
 try{
 if(isset($_POST['login'])) {
    
@@ -24,15 +22,12 @@ if(isset($_POST['login'])) {
         throw new customException("EmptyField",1);
           }
     $sql = "SELECT * FROM users WHERE email = '$email'";
-
     $user = $con->query($sql) or die ($con->error);
     $row = $user -> fetch_assoc();
     $total = $user->num_rows;
    
     if ($total > 0) {
-
         $db_password = $row['password'];
-
         if(password_verify($password, $db_password)) {
             session_destroy();
             session_start();
@@ -40,9 +35,7 @@ if(isset($_POST['login'])) {
             $_SESSION['UserLogin'] = $row['email'];
             $_SESSION['Access'] = $row['access'];
             $_SESSION['ID'] = $row['userID'];
-            echo header("Location: home.php");    
-        
-            
+            echo header("Location: home.php");      
          insertLog("Success", 0, "Successful login");
         } else{
             $loginErrorMsg="Invalid username and/or password! Please try again!";
@@ -55,22 +48,16 @@ if(isset($_POST['login'])) {
     $con->close();
 }
 }catch(customException $e){
-    
     insertLog("ERROR", $e->errorCode(), $e->errorMessage());
 }
 
-
-
-
 try{
 if(isset($_POST['register'])) {
-    
     $firstName = "";
     $lastName = "";
     $email = "";
     $password = '';
 
-    
     if(isFirstNameValid($_POST['firstName']) == 1) {
         $firstName = formValidate($_POST['firstName']);
     } else {
@@ -78,7 +65,6 @@ if(isset($_POST['register'])) {
         throw new customException("First Name Input Validation Error",1);
     }
 
-     
     if(isLastNameValid($_POST['lastName']) == 1) {
         $lastName = formValidate($_POST['lastName']);
     } else {
@@ -86,7 +72,6 @@ if(isset($_POST['register'])) {
         throw new customException("Last Name Input Validation Error",1);
     }
 
-    
     if(isEmailValid($_POST['email']) == 1) {
         $email = formValidate($_POST['email']);
     } else {
@@ -94,7 +79,6 @@ if(isset($_POST['register'])) {
         throw new customException("Email Input Validation Error",1);
     }
 
-    
     if(isPasswordValid($_POST['password']) == 1) {
         $password = $_POST['password'];
     } else {
@@ -102,11 +86,9 @@ if(isset($_POST['register'])) {
         throw new customException("Password Input Validation Error",1);
     }
 
-    
     if($password != ""){
         $hash = password_hash($password, PASSWORD_BCRYPT);
     }
-    
     
     $sql = "SELECT * FROM users WHERE email = '$email'";
     $user = $con->query($sql) or die ($con->error);
@@ -118,8 +100,7 @@ if(isset($_POST['register'])) {
         throw new customException("Duplicate Email");
     } else {
         $insertSql = "INSERT INTO `users` (`firstName`,`lastName`, `email`,`password`,`access`) VALUES ('$firstName', '$lastName', '$email','$hash','user')";
-   
-              
+     
         if($firstName == "" || $lastName == "" || $email == "" || $password = "") {	
             throw new customException("Error: Invalid Input!");	
         } else {	
@@ -135,7 +116,6 @@ if(isset($_POST['register'])) {
         $_SESSION['ID'] = $last_id;
         echo header("Location: home.php");  
 
-             
         insertLog("INFO", 1, " User ID ".$last_id." Register Successful");
         insertLog("INFO", 1, " User ID ".$_SESSION['ID']." successfully login to the system");
     }
@@ -143,7 +123,6 @@ if(isset($_POST['register'])) {
     $con->close();
 }
 }catch(customException $e){
- 
     insertLog("ERROR",$e->errorCode(), $e->errorMessage());
 }
 
@@ -159,36 +138,23 @@ if(isset($_POST['register'])) {
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-
 </head>
 
 <body>
     <div class="container-fluid">
         <div class="row">
-
             <div class="col-6 home-left">
                     <h1 class="brand-title text-center text-white"> <b>The CCIT Forum.</b></h1>
-                
                 <div class="brand-list text-white">
                     <ul>
                         <li>Share your thoughts!</li>
                         <li>Communicate with other CCIT students!</li>
                         <li>Be as one!</li>
                     </ul>
-                </div>
-
-                <!-- <div class="brand-subtitle">
-                    <h4>"Insert Subtitle Here"</h3>
-                </div> -->
-
-                
+                </div>               
             </div>
-
             <div class="col-6 home-right">
-                
                 <div class="row">
-
-                    
                     <div class="login">
                         <h5 class="text-muted text-center">National University - Manila</h5>
                         <p class="text-muted">College of Computing and Information Technologies</p>
@@ -206,13 +172,10 @@ if(isset($_POST['register'])) {
                                             name="password"> <input id = "passW" type="checkbox" onclick="unhidePassword()"> Show
                                         Password </input>
                                     </div>
-
                                     <input type="submit" name="login" class="btn btn-primary float-right"
                                         value="Sign In"></input>
                                 </form>
                                 
-                                
-
                                 <?php if($loginErrorMsg != "") echo "<p> <font color=red  font face='poppins' size='2pt'>$loginErrorMsg</font> </p>" . "<br>"; ?>
                                 
                                 <p> Not yet a member? <button id="registerBtn" class="btn btn-link"> Sign Up Now!
@@ -221,7 +184,6 @@ if(isset($_POST['register'])) {
                         </div>
                     </div>
 
-                    
                     <div class="register">
                         <h5 class="text-muted text-center">National University - Manila</h5>
                         <p class="text-muted">College of Computing and Information Technologies</p>
@@ -267,7 +229,6 @@ if(isset($_POST['register'])) {
         </div>
     </div>
 
-    
     <footer class="footer bg-light fixed-bottom">
         <div class="container">
             <span class="text-muted text-center footer-text"> The College of Computing and Information Technolgies
@@ -275,12 +236,7 @@ if(isset($_POST['register'])) {
         </div>
     </footer>
 
-
-
-    
     <script src="js/jquery/jquery.min.js"></script>
-
-    
     <script>
         $(".register").hide();
 

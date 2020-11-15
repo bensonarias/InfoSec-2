@@ -6,7 +6,6 @@ if(!isset($_SESSION)) {
     session_start();
 }
 
-
 include_once "connections/connection.php";
 include "errorhandler/errorhandler.php";
 include "errorhandler/sql_logging.php";
@@ -24,7 +23,6 @@ $eM = "";
 $cond = false;
 
 if(isset($_POST['submit'])) {
-   
     try{
     if(isFirstNameValid($_POST['firstName']) == 1) {
         $firstName = formValidate($_POST['firstName']);
@@ -38,7 +36,6 @@ if(isset($_POST['submit'])) {
         insertLog("ERROR",1,"First Name Input Validation Error");
     }
 
-    
     if(isLastNameValid($_POST['lastName']) == 1) {
         $lastName = formValidate($_POST['lastName']);
     } else {
@@ -50,7 +47,6 @@ if(isset($_POST['submit'])) {
         insertLog("ERROR",1,"Last Name Input Validation Error");
     }
 
-    
     if(isEmailValid($_POST['email']) == 1) {
         $email = formValidate($_POST['email']);
     } else {
@@ -62,7 +58,6 @@ if(isset($_POST['submit'])) {
         insertLog("ERROR",1,"Email Input Validation Error");
     }
 
-    
     if(isPasswordValid($_POST['password']) == 1) {
         $password = $_POST['password'];
     } else {
@@ -107,9 +102,7 @@ if(isset($_POST['submit'])) {
 </head>
 
 <body>
-
     <div class="container">
-
         <div class="register">
            <h1 class="text-center"> <b>CCIT Forum Admin</b> </h1>
             <h3 class="text-center">Add New User </h1>
@@ -143,19 +136,13 @@ if(isset($_POST['submit'])) {
 
                                 </select>
                             </div>
-
                         <input type="submit" name="submit" class="btn btn-success float-right" value="Add New User"></input>
                     </form>
                 </div>
             </div>
         </div>
-
     </div>
-
-
     <script src="js/jquery/jquery.min.js"></script>
-
-    
     <script>
         function unhidePassword() {
             var x = document.getElementById("pass");

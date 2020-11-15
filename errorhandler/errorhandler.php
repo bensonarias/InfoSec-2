@@ -6,16 +6,12 @@ function customError($errno, $errstr, $errfile, $errline) {
 
 class customException extends Exception {
     public function errorMessage() {
-      
       $errorMsg = $this->getMessage();
       return $errorMsg;
     }
     public function errorCode() {
-      
       $errorCode = $this->getCode();
       return $errorCode;
     }
   }
- 
-
 ?>

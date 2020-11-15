@@ -22,7 +22,6 @@ if (isset($_SESSION['UserLogin'])) {
 } else {
     echo "Welcome guest!";
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -35,13 +34,9 @@ if (isset($_SESSION['UserLogin'])) {
 </head>
 
 <body>
-
-
     <div class="container">
         <h1 class="text-center"><b> The CCIT Wall </b></h1>
         <h3 class="text-center">Homepage</h3>
-        
-
         
         <h1> Accounts </h1>
         <small> View All Users</small>
@@ -60,10 +55,7 @@ if (isset($_SESSION['UserLogin'])) {
             <?php if ($_SESSION['Access'] == "admin") { ?>
                 <a class="btn btn-link float-right font-weight-bold text-decoration-none" href="/ccitforum/add.php"> Add New Account </a> <br> <br>
             <?php } ?>
-
-            
             <a id="loginBtn" class="btn btn-link float-right font-weight-bold" href="/ccitforum/update.php?ID=<?php echo $id ?>"> Edit my Account </a>
-
         </div>
 
         <form action="result.php" method="get">
@@ -75,9 +67,7 @@ if (isset($_SESSION['UserLogin'])) {
             </div>
         </form>
 
-
         <table class="table table-striped">
-
             <thead class="bg-primary" style="color:white;">
                 <tr>
                     <th scope="col">View Profile</th>
@@ -86,9 +76,8 @@ if (isset($_SESSION['UserLogin'])) {
                     <th scope="col">Last Name</th>
                     <th scope="col">Email</th>
 
-                    
                     <?php if ($_SESSION['Access'] == "admin") { ?>
-                      
+                    
                         <th scope="col">Access</th>
                         <th scope="col">Update</th>
                         <th scope="col">Delete</th>
@@ -108,11 +97,8 @@ if (isset($_SESSION['UserLogin'])) {
                             <td> <?php echo $row['lastName']; ?> </td>
                             <td> <?php echo $row['email']; ?> </td>
 
-                            
-                            <?php if ($_SESSION['Access'] == "admin") { ?>
-                               
+                            <?php if ($_SESSION['Access'] == "admin") { ?> 
                                 <td> <?php echo $row['access']; ?> </td>
-
                                 <td>
                                     <a class="view btn btn-warning btn-sm font-weight-bold" name="update" href="/ccitforum/update.php?ID=<?php echo $row['userID'] ?>">Update</a>
                                 </td>
@@ -127,10 +113,7 @@ if (isset($_SESSION['UserLogin'])) {
                     <?php } ?>
                 <?php } while ($row = $users->fetch_assoc()) ?>
             </tbody>
-
-
         </table>
         <div>
-
 </body>
 <html>
