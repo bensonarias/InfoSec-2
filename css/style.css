@@ -47,13 +47,13 @@ html {
   
   .brand-title {  
     padding-top: 50px;
-    font-family: poppins;
+    font-family: 'Poppins';
   }
 
   .brand-list {
     padding-left: 200px;
     padding-top: 10px;
-    font-family: poppins;
+    font-family: 'Poppins';
   }
   
   /* .brand-subtitle {
@@ -65,7 +65,7 @@ html {
   .login, .register {
     padding-left: 180px;
     padding-top: 40px;
-    font-family: poppins;
+    font-family: 'Poppins';
   
   }
   
@@ -82,7 +82,7 @@ html {
   }
 
   .container{
-    font-family: poppins;
+    font-family: 'Poppins';
 
   }
 
